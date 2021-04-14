@@ -1,22 +1,22 @@
 class Record:
 
     def __init__(self):
-        self.__doctor__ = ''
-        self.__patient__ = ''
+        self.__teacher__ = ''
+        self.__student__ = ''
         self.__data__ = []
 
-    def addUsers(self, doctor: str, patient: str) -> None:
-        self.__doctor__ = doctor
-        self.__patient__ = patient
+    def addUsers(self, teacher: str, student: str) -> None:
+        self.__teacher__ = teacher
+        self.__student__ = student
 
-    def addData(self, medData: str) -> None:
-        self.__data__.append(medData)
+    def addData(self, acad_data: str) -> None:
+        self.__data__.append(acad_data)
 
-    def getDoctor(self) -> str:
-        return self.__doctor__
+    def getTeacher(self) -> str:
+        return self.__teacher__
 
-    def getPatient(self) -> str:
-        return self.__patient__
+    def getStudent(self) -> str:
+        return self.__student__
 
     def printData(self) -> None:
         for data in self.__data__:

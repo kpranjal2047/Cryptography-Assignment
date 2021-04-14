@@ -19,9 +19,9 @@ def zkpdiscretelog(y1: int) -> bool:
     b = random.randint(0, 1)
     print('Random bit(b) is: ' + str(b))
     s = int(input('''
-    Please compute s = (r + b*x) mod 10.
-    Here x is the number you are proving you know (i.e., the password): 
-    '''))
+Please compute s = (r + b*x) mod 10.
+Here x is the number you are proving you know (i.e., the password): 
+'''))
     val1 = pow(2, s, 11)
     val2 = (h * pow(y1, b, 11)) % 11
     if val1 == val2:

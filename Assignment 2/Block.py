@@ -7,9 +7,9 @@ from Record import Record
 
 class Block:
 
-    def __init__(self, record: list, previousHash: str, curr_med_data: Record, non=0):
+    def __init__(self, record: list, previousHash: str, curr_acad_data: Record, non=0):
         self.__nonce__ = non
-        self.__curr_med_data__ = curr_med_data
+        self.__curr_acad_data__ = curr_acad_data
         self.__previousHash__ = previousHash
         self.__timeStamp__ = int(time())
         self.__recordObj__ = record
@@ -43,11 +43,11 @@ class Block:
     def getTimeStamp(self) -> int:
         return self.__timeStamp__
 
-    def doc_name(self) -> str:
-        return self.__curr_med_data__.getDoctor()
+    def teacher_name(self) -> str:
+        return self.__curr_acad_data__.getTeacher()
 
-    def patient_name(self) -> str:
-        return self.__curr_med_data__.getPatient()
+    def student_name(self) -> str:
+        return self.__curr_acad_data__.getStudent()
 
     def printData(self) -> None:
-        self.__curr_med_data__.printData()
+        self.__curr_acad_data__.printData()

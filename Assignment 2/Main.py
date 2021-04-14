@@ -11,7 +11,7 @@ previousHash = '0'
 blockchain = []
 records = []
 users = []
-doctors = []
+teachers = []
 p = 11
 g = 2
 
@@ -20,7 +20,7 @@ if exists('state'):
         opt = input('Previous data found... Import? (yes/no): ')
         if opt == 'yes':
             with open('state', 'rb') as f:
-                previousHash, blockchain, records, users, doctors = pickle.load(f)
+                previousHash, blockchain, records, users, teachers = pickle.load(f)
             print('Import Successful')
             break
         elif opt == 'no':
@@ -48,74 +48,74 @@ def verifyChain(block: Block) -> bool:
 
 
 def viewUser() -> None:
-    value = input('Are you a doctor or patient? (d/p): ')
-    if value == 'd':
-        doct = input('Enter your name: ')
+    value = input('Are you a teacher or student? (t/s): ')
+    if value == 't':
+        teac = input('Enter your name: ')
         passwd = input('Enter your pass: ')
         flag = False
-        for doctor in doctors:
-            if doctor.getName() == doct and doctor.getPass() == passwd:
+        for teacher in teachers:
+            if teacher.getName() == teac and teacher.getPass() == passwd:
                 for block in blockchain:
-                    if block.doc_name == doct:
+                    if block.teacher_name() == teac:
                         print(
                             'TimeStamp at which data was recorded: ' + str(block.getTimeStamp()))
-                        print('Doctor:' + doct)
-                        print('Patient:' + block.patient_name())
-                        print('His Medical Data:')
+                        print('Teacher:' + teac)
+                        print('Student:' + block.student_name())
+                        print('His Academic Data:')
                         block.printData()
                         print()
                         flag = True
                 if flag:
                     break
         if not flag:
-            print('Doctor Not Found')
-    elif value == 'p':
-        pat = input('Enter your name: ')
+            print('Teacher Not Found')
+    elif value == 's':
+        stud = input('Enter your name: ')
         y = 0
         for user in users:
-            if user.getName() == pat:
+            if user.getName() == stud:
                 x = int(user.getPass())
                 y = pow(g, x, p)
         if not zkpdiscretelog(y):
             return
         flag = False
         for user in users:
-            if user.getName() == pat:
+            if user.getName() == stud:
                 for block in blockchain:
-                    if block.patient_name() == pat:
+                    if block.student_name() == stud:
                         print('Time: ' + str(block.getTimeStamp()))
-                        print('Doctor:' + block.doc_name())
-                        print('Patient:' + pat)
-                        print("Patient's Medical Data:")
+                        print('Teacher:' + block.teacher_name())
+                        print('Student:' + stud)
+                        print("Student's Academic Data:")
                         block.printData()
                         print()
                         flag = True
                 if flag:
                     break
         if not flag:
-            print('Patient Not Found')
+            print('Student Not Found')
     else:
         print('Option not recognized')
 
 
 if __name__ == '__main__':
-    doc1 = User()
-    doc1.setName('Abhik')
-    doc1.setPass('1')
-    doctors.append(doc1)
-    users.append(doc1)
+    teacher1 = User()
+    teacher1.setName('Abhik')
+    teacher1.setPass('1')
+    teachers.append(teacher1)
+    users.append(teacher1)
 
-    doc2 = User()
-    doc2.setName('Pranjal')
-    doc2.setPass('2')
-    doctors.append(doc2)
-    users.append(doc2)
+    teacher2 = User()
+    teacher2.setName('Pranjal')
+    teacher2.setPass('2')
+    teachers.append(teacher2)
+    users.append(teacher2)
 
-    doc3 = User()
-    doc3.setName('Yash')
-    doc3.setPass('3')
-    doctors.append(doc3)
-    users.append(doc3)
+    teacher3 = User()
+    teacher3.setName('Yash')
+    teacher3.setPass('3')
+    teachers.append(teacher3)
+    users.append(teacher3)
 
     choice = 'yes'
     while choice == 'yes':
@@ -126,38 +126,38 @@ if __name__ == '__main__':
             passwd = input('Enter password (integer only): ')
             passwd_v = input('Verify password: ')
             if passwd == passwd_v:
-                new_patient = User()
-                new_patient.setName(name)
-                new_patient.setPass(passwd)
-                users.append(new_patient)
+                new_student = User()
+                new_student.setName(name)
+                new_student.setPass(passwd)
+                users.append(new_student)
             else:
                 print('Password verification failed')
 
         elif option == 'add':
-            dname = input('Enter doctor name: ')
-            dpass = input('Enter doctor password: ')
-            pname = input('Enter patient name: ')
+            tname = input('Enter teacher name: ')
+            tpass = input('Enter teacher password: ')
+            sname = input('Enter student name: ')
             y = 0
             for user in users:
-                if user.getName() == pname:
+                if user.getName() == sname:
                     x = int(user.getPass())
                     y = pow(g, x, p)
             if not zkpdiscretelog(y):
                 continue
 
             new_rec = Record()
-            new_rec.addUsers(dname, pname)
+            new_rec.addUsers(tname, sname)
 
             flag = False
 
-            for doctor in doctors:
-                if doctor.getName() == dname and doctor.getPass() == dpass:
+            for teacher in teachers:
+                if teacher.getName() == tname and teacher.getPass() == tpass:
                     for user in users:
-                        if user.getName() == pname:
+                        if user.getName() == sname:
                             while True:
                                 ip = input('Enter data (y/n): ')
                                 if ip == 'y':
-                                    newdata = input()
+                                    newdata = input('Enter Data: ')
                                     new_rec.addData(newdata)
                                 elif ip == 'n':
                                     records.append(new_rec)
@@ -180,5 +180,5 @@ if __name__ == '__main__':
         choice = input('Do you want to continue? (yes/no): ')
 
     with open('state', 'wb') as f:
-        dump = (previousHash, blockchain, records, users, doctors)
+        dump = (previousHash, blockchain, records, users, teachers)
         pickle.dump(dump, f)
