@@ -1,3 +1,11 @@
+## Cryptography Assignment 2
+## Implementation of BlockChain
+## Created by--
+## Kumar Pranjal - 2018A7PS0163H
+## Yash Arora - 2018A4PS0002H
+## Abhik Santra - 2018A8PS0612H
+## Ayush Singh Chauhan - 2018B4PS0818H
+
 import pickle
 from os.path import exists
 
