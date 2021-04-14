@@ -8,7 +8,7 @@ from Record import Record
 class Block:
 
     def __init__(self, record: list, previousHash: str, curr_med_data: Record, non=0):
-        self.__non__ = non
+        self.__nonce__ = non
         self.__curr_med_data__ = curr_med_data
         self.__previousHash__ = previousHash
         self.__timeStamp__ = int(time())
@@ -18,13 +18,13 @@ class Block:
 
     def calculateHash(self) -> str:
         calculatedHash = Util.applySha256(
-            self.__previousHash__ + str(self.__non__))
+            self.__previousHash__ + str(self.__nonce__))
         return calculatedHash
 
     def mineBlock(self, difficulty: int) -> None:
         target = Util.getDifficultyString(difficulty)
         while not self.__blockHash__[0:difficulty] == target:
-            self.__non__ += 1
+            self.__nonce__ += 1
             self.__blockHash__ = self.calculateHash()
         calculatedHash = self.__blockHash__.upper()
         first = DES.encrypt(calculatedHash[0:16])
