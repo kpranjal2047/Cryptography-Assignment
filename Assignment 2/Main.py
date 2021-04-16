@@ -22,6 +22,7 @@ users = []
 teachers = []
 p = 11
 g = 2
+imported = False
 
 if exists('state'):
     while True:
@@ -29,6 +30,7 @@ if exists('state'):
         if opt == 'yes':
             with open('state', 'rb') as f:
                 previousHash, blockchain, records, users, teachers = pickle.load(f)
+            imported = True
             print('Import Successful')
             break
         elif opt == 'no':
@@ -107,23 +109,24 @@ def viewUser() -> None:
 
 
 if __name__ == '__main__':
-    teacher1 = User()
-    teacher1.setName('Abhik')
-    teacher1.setPass('1')
-    teachers.append(teacher1)
-    users.append(teacher1)
+    if not imported:
+        teacher1 = User()
+        teacher1.setName('Abhik')
+        teacher1.setPass('1')
+        teachers.append(teacher1)
+        users.append(teacher1)
 
-    teacher2 = User()
-    teacher2.setName('Pranjal')
-    teacher2.setPass('2')
-    teachers.append(teacher2)
-    users.append(teacher2)
+        teacher2 = User()
+        teacher2.setName('Pranjal')
+        teacher2.setPass('2')
+        teachers.append(teacher2)
+        users.append(teacher2)
 
-    teacher3 = User()
-    teacher3.setName('Yash')
-    teacher3.setPass('3')
-    teachers.append(teacher3)
-    users.append(teacher3)
+        teacher3 = User()
+        teacher3.setName('Yash')
+        teacher3.setPass('3')
+        teachers.append(teacher3)
+        users.append(teacher3)
 
     choice = 'yes'
     while choice == 'yes':
